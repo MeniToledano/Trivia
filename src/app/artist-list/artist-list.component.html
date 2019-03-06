@@ -1,0 +1,9 @@
+<h2>Add An Artist From Itunes:</h2>
+<br>
+<input type="text" id="input" #input>
+<button type="button" (click) = "addArtists(input)" > add </button>
+
+<p *ngIf = "!artistAdded">Fail To Find The Artist</p>
+
+
+
