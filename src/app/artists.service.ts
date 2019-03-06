@@ -1,6 +1,7 @@
 import {Artist} from "./artist-list/artist.model";
 import {EventEmitter, Injectable} from "@angular/core";
 import {HttpReqService} from "./httpReq.service";
+import { Response } from '@angular/http';
 
 @Injectable()
 export class ArtistsService {
