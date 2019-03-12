@@ -1,13 +1,13 @@
 import {PlayerModule} from "./player.module";
 
 export class HighScoreService {
-    records: PlayerModule[]= [] ;
+    records: PlayerModule[] = [];
 
-    serRecord(player : PlayerModule){
+    serRecord(player: PlayerModule) {
         this.records.push(player);
     }
 
-    getRecords(){
+    getRecords() {
         return this.records;
     }
 }

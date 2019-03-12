@@ -10,6 +10,7 @@ import { ArtistListComponent } from './artist-list/artist-list.component';
 import { GameRoundComponent } from './game-round/game-round.component';
 import { HighScoreComponent } from './high-score/high-score.component';
 import {HighScoreService} from "./high-score/HighScoreService.service";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -20,10 +21,11 @@ import {HighScoreService} from "./high-score/HighScoreService.service";
   ],
   imports: [
     BrowserModule,
-      HttpModule
+      HttpModule,
+      FormsModule
 
   ],
-  providers: [ HttpReqService, ArtistsService,HighScoreService],
+  providers: [ HttpReqService, ArtistsService, HighScoreService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

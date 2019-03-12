@@ -1,24 +1,24 @@
-<div *ngIf = "gameOver">
+<div *ngIf="gameOver">
     <p> Game Over</p>
 </div>
 <div class="container">Total Score :{{totalScore}}</div>
 
-<div *ngIf = "!gameOver">
+<div *ngIf="!gameOver">
     <div>Round: {{roundNumber}}</div>
 
     <h1> Which artist made this album?</h1>
-    <h3 *ngIf ="bonusQuestion">
+    <h3 *ngIf="bonusQuestion">
         Bonus!! Get Extra Points!
     </h3>
-<div>
+    <div>
 
-    <img
-        [src]="src"
-        alt="error"
-        class="img-responsive"
-        style="max-height: 300px;">
+        <img
+                [src]="src"
+                alt="error"
+                class="img-responsive"
+                style="max-height: 300px;">
 
-</div>
+    </div>
 
     <div>
         <ul *ngIf="!(correctAnswer || outOfGuesses)" class="list-group">
@@ -28,16 +28,17 @@
                     *ngFor="let answer of answers; let i = index"
                     (click)="checkAnswer(i)"
             >
-              {{i+1}})  {{ answer }}
+                {{i+1}}) {{ answer }}
             </a>
 
         </ul>
     </div>
-    <h3 *ngIf = "wrongAnswer">{{numberOfGuesses}} Wrong answer</h3>
-    <h3 *ngIf = "correctAnswer">Good Job!</h3>
-<div>
-    <button *ngIf="correctAnswer || outOfGuesses" (click) = "questionReset()" class="btn btn-primary">Next Question</button>
-</div>
+    <h3 *ngIf="wrongAnswer">{{numberOfGuesses}} Wrong answer</h3>
+    <h3 *ngIf="correctAnswer">Good Job!</h3>
+    <div>
+        <button *ngIf="correctAnswer || outOfGuesses" (click)="questionReset()" class="btn btn-primary">Next Question
+        </button>
+    </div>
 </div>
 
 
