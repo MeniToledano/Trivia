@@ -1,12 +1,19 @@
-<div *ngIf = '!showTable'>
-  <h1 *ngIf = "newHighScore"> CONGRATS!!! NEW HIGH SCORE!!</h1>
-  <h3>Please Enter Your Name:</h3>
-  <input type="Enter Name.." #Name>
-  <button (click) = "addRecord(Name.value)">Submit</button>
-</div>
-<div *ngIf = 'showTable'>
-  <h1>  TOP PLAYERS </h1>
- <div *ngFor ="let record of records; let i = index">
-  {{i}}) {{record.name}} - {{record.score}}
- </div>
+<div class="row">
+    <div class="col-xs-4 col-sm-offset-4">
+        <div *ngIf='!showTable'>
+            <h1 *ngIf="newHighScore"> CONGRATS!!! NEW HIGH SCORE!!</h1>
+            <h3>Please Enter Your Name:</h3>
+            <input type="text" #Name>
+            <button (click)="addRecord(Name.value)">Submit</button>
+        </div>
+
+        <h1> TOP PLAYERS </h1>
+
+        <div *ngIf='showTable && (records.length !== 0)'>
+
+            <div *ngFor="let record of records; let i = index">
+                {{i+1}}) {{record.name}} - {{record.score}}
+            </div>
+        </div>
+    </div>
 </div>

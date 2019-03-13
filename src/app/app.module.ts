@@ -11,6 +11,12 @@ import { GameRoundComponent } from './game-round/game-round.component';
 import { HighScoreComponent } from './high-score/high-score.component';
 import {HighScoreService} from "./high-score/HighScoreService.service";
 import {FormsModule} from "@angular/forms";
+import {RouterModule, Routes} from "@angular/router";
+
+const appRoutes: Routes = [
+    { path: 'top' , component: HighScoreComponent },
+    { path: 'addArtists' , component: ArtistListComponent }
+];
 
 @NgModule({
   declarations: [
@@ -22,7 +28,8 @@ import {FormsModule} from "@angular/forms";
   imports: [
     BrowserModule,
       HttpModule,
-      FormsModule
+      FormsModule,
+      RouterModule.forRoot(appRoutes)
 
   ],
   providers: [ HttpReqService, ArtistsService, HighScoreService],

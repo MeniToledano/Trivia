@@ -1,26 +1,33 @@
 <div *ngIf="!gameStart" class="container">
 
-
-    <div class="col-md-4 center-block">
-        <button
-                class="btn btn-primary center-block"
-                (click)="artistsList = !artistsList"
-        >Add Artists
-        </button>
-    </div>
+    <br><br>
+    <button
+            class="btn btn-primary center-block btn-lg btn-block"
+            (click)="buttonClicked('addArtists') "
+    >Add Artists
+    </button>
 
 
-    <div class="col-md-4 center-block">
-        <button
-                class="btn btn-primary center-block"
-                (click)="gameStart = true; artistsList= false"
-        >Let's Play
-        </button>
-    </div>
+    <br><br>
+    <button
+            class="btn btn-primary center-block btn-lg btn-block"
+            (click)="buttonClicked('topPlayers') "
+    >Top Players
+    </button>
+
+
+    <br><br>
+    <button
+            class="btn btn-primary  btn-lg btn-block center-block"
+            (click)="buttonClicked('newGame') "
+
+    >Let's Play
+    </button>
 
 
 </div>
 
+
 <app-artist-list *ngIf="artistsList"></app-artist-list>
 <app-game-round *ngIf="gameStart" (gameOverEvent)="gameOver($event)"></app-game-round>
-<app-high-score *ngIf='highScoreTable && !gameStart' [gameResult]='highScore'></app-high-score>
+<app-high-score *ngIf='highScoreTable' [gameResult]='highScore'></app-high-score>
