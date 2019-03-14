@@ -15,31 +15,48 @@ export class ArtistsService {
     constructor(private httpReq: HttpReqService) {
     }
 
-//
-    onAddArtistOnline(artistName2: string): string {
-        this.httpReq.getArtists(artistName2).subscribe(
-            (response: Response) => {
-                const data = response.json();
-                if (data.results.length > 0) {
-                    console.log("aaa:");
-                    this.temp = (data.results)[0].artworkUrl60;
-                    return this.temp;
-                    //    let artist = new Artist(this.name, this.img);
-                    //   this.artists.push(artist);
-                    //  this.artistAddedSucesfully.emit(true);
-                    //  return this.img.slice();
-                } else {
-                    this.artistAddedSuccessfully.emit(false);
-                    console.log("ccc");
-                    return "a";
-
-                }
-            },
-            (error: Error) => this.artistAddedSuccessfully.emit(false)
-        );
-        console.log("ddd");
-        this.artistAdded.emit(this.artists.slice());
-        return this.temp;
+     // note the return type, Promise<string> means SOMEWHEN you will receive a string, when the promise is fulfilled
+     // that means, that whoever is going to use this function, needs to know the return data will "take time"
+    async onAddArtistOnline(artistName2: string): Promise<string> {
+      return <Promise<string>>this.httpReq.getArtists(artistName2).toPromise().then(
+        response => {
+          const data = response.json();
+          if (data.results.length > 0) {
+            this.temp = (data.results)[0].artworkUrl60;
+            console.log(`returned album name ${this.temp}`);
+            // you return "string", but because the function is async, its wrapped inside a Promise
+            return this.temp;
+          }
+        },
+        error => {
+          console.error(`Error when getting album`, error);
+          this.artistAddedSuccessfully.emit(false);
+        }
+      );
+        // this.httpReq.getArtists(artistName2).subscribe(
+        //     (response: Response) => {
+        //         const data = response.json();
+        //         if (data.results.length > 0) {
+        //             console.log("aaa:");
+        //             // TODO: temp is not a good name...
+        //             this.temp = (data.results)[0].artworkUrl60;
+        //             return this.temp;
+        //             //    let artist = new Artist(this.name, this.img);
+        //             //   this.artists.push(artist);
+        //             //  this.artistAddedSucesfully.emit(true);
+        //             //  return this.img.slice();
+        //         } else {
+        //             this.artistAddedSuccessfully.emit(false);
+        //             console.log("ccc");
+        //             return "a";
+        //
+        //         }
+        //     },
+        //     (error: Error) => this.artistAddedSuccessfully.emit(false)
+        // );
+        // console.log("ddd");
+        // this.artistAdded.emit(this.artists.slice());
+        // return this.temp;
         // return 'a';
     }
 

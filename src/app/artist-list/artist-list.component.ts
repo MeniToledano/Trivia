@@ -35,10 +35,20 @@ export class ArtistListComponent implements OnInit {
     }
 
     artistNameEvent(event: Event): void {
-
         this.artistNameInput = (<HTMLInputElement>event.target).value;
-        this.albumSrc = this.artistsService.onAddArtistOnline(this.artistNameInput);
-        console.log("in component" + this.albumSrc);
+        // onAddArtistOnline returns a Promise, so in order to define what happens when the promise is fulfilled
+        // we need to use "then" (+- like subscribe, another topic)
+        // and then make the assignment:
+        //  this.albumSrc = albumSrc;
+        this.artistsService.onAddArtistOnline(this.artistNameInput).then(
+          albumSrc => {
+            this.albumSrc = albumSrc;
+            console.log("artistNameEvent album src is " + this.albumSrc);
+          },
+          error => {
+            console.error(`Error adding artist...`, error);
+          }
+        );
 
     }
 
