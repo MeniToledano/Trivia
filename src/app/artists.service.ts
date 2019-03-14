@@ -2,6 +2,7 @@ import {Artist} from "./artist-list/artist.model";
 import {EventEmitter, Injectable} from "@angular/core";
 import {HttpReqService} from "./httpReq.service";
 import {Response} from '@angular/http';
+import {Observable} from "rxjs";
 
 @Injectable()
 export class ArtistsService {
@@ -62,23 +63,58 @@ export class ArtistsService {
 
 
     onAddArtist(artistName: string): void {
-        this.httpReq.getArtists(artistName).subscribe(
-            (response: Response) => {
-                const data = response.json();
-                console.log(data);
-                if (data.results.length > 0) {
-                    this.name = (data.results)[0].artistName;
-                    this.img = (data.results)[0].artworkUrl60;
-                    const artist = new Artist(this.name, this.img);
-                    this.artists.push(artist);
-                    this.artistAddedSuccessfully.emit(true);
-                } else {
-                    this.artistAddedSuccessfully.emit(false);
-                }
-            },
-            (error) => this.artistAddedSuccessfully.emit(false)
-        );
+      this.getArtists(artistName).then(
+        (artist: Artist) => {
+          // I removed all the "parsing" logic to another function, and now the "addArtist" function is more readable.
+          this.artists.push(artist);
+          this.artistAddedSuccessfully.emit(true);
+        },
+        error => {
+          // TODO: here you will catch "NO_MATCHING_ARTIST_FOUND" error
+          console.error(`Error adding artist`, error);
+          this.artistAddedSuccessfully.emit(false);
+        }
+      );
+        // this.httpReq.getArtists(artistName).subscribe(
+        //     (response: Response) => {
+        //         const data = response.json();
+        //         console.log(data);
+        //         if (data.results.length > 0) {
+        //             this.name = (data.results)[0].artistName;
+        //             this.img = (data.results)[0].artworkUrl60;
+        //             const artist = new Artist(this.name, this.img);
+        //             this.artists.push(artist);
+        //             this.artistAddedSuccessfully.emit(true);
+        //         } else {
+        //             this.artistAddedSuccessfully.emit(false);
+        //         }
+        //     },
+        //     (error) => this.artistAddedSuccessfully.emit(false)
+        // );
         this.artistAdded.emit(this.artists.slice());
+    }
+
+    async getArtists(artistName: string): Promise<Artist> {
+      return this.httpReq.getArtists(artistName).toPromise().then(
+        (response: Response) => {
+          const data = response.json();
+          console.log(`received raw data`, data);
+          if (data.results.length > 0) {
+            this.name = (data.results)[0].artistName;
+            this.img = (data.results)[0].artworkUrl60;
+            const artist = new Artist(this.name, this.img);
+            return artist;
+          }
+          else {
+            throw new Error('NO_MATCHING_ARTIST_FOUND');
+          }
+        },
+        (error) => {
+          // TODO: this is not necessarily a good practice, just didnt want to change your code much
+          throw new Error('NO_MATCHING_ARTIST_FOUND');
+          this.artistAddedSuccessfully.emit(false);
+        }
+      );
     }
 
     getArtistsList(): Artist[] {
