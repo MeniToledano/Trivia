@@ -62,6 +62,7 @@ export class ArtistsService {
     }
 
 
+    // TODO: this name adds artist to the list, should be called "addArtist(name: string)"
     onAddArtist(artistName: string): void {
       this.getArtists(artistName).then(
         (artist: Artist) => {

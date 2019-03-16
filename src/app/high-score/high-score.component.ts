@@ -20,14 +20,14 @@ export class HighScoreComponent implements OnInit {
 
     ngOnInit() {
         this.records = this.highScoreService.getRecords();
-        console.log("this.gameResult= "+this.gameResult);
-if(this.gameResult !== -1){
-    this.updateRecords();
-}else{
-    this.showTable = true;
-}
-
-
+        console.log("this.gameResult= " + this.gameResult);
+        // TODO: its not very clear what you are doing here... a comparison to -1?
+        if (this.gameResult !== -1) {
+          // TODO: update records with what?
+            this.updateRecords();
+        } else {
+            this.showTable = true;
+        }
     }
 
     updateRecords(): void {
@@ -42,13 +42,23 @@ if(this.gameResult !== -1){
 
     addRecord(name: string): void {
         this.showTable = true;
+        // TODO: all params should be formatter with camelCase. in your case: const player;
         const Player = new PlayerModule(name, this.gameResult);
         this.highScoreService.serRecord(Player);
-        this.records.sort(function compare(a: PlayerModule, b: PlayerModule) {
-            if (a.score > b.score)
-                return -1;
-            else
-                return 1;
-        });
+        // TODO: this sorts the records. should be a separate function.
+        // also, you called the function "compare", but this is an anonymous function!
+        // this.records.sort(function compare(a: PlayerModule, b: PlayerModule) {
+        //     if (a.score > b.score)
+        //         return -1;
+        //     else
+        //         return 1;
+        // });
+        this.sortRecordsBoard();
+    }
+
+    // TODO: i added this function because the way the SORT is made, is not important for 'addRecord'
+    // you should separate different implementations and use it within different functions.
+    sortRecordsBoard(): void {
+      this.records.sort((a: PlayerModule, b: PlayerModule) => ((a.score > b.score) ? -1 : 1));
     }
 }

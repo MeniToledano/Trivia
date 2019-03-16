@@ -23,6 +23,7 @@ export class GameRoundComponent implements OnInit {
     private correctAnswer = false;
     private correctChoice: number = -1;
     private random: number[] = [];
+    // TODO: i dont know what arr means or what it holds
     private arr = [];
 
     private roundNumber: number = 1;
@@ -68,13 +69,17 @@ export class GameRoundComponent implements OnInit {
         this.nextQuestion = false;
     }
 
+  // TODO: look at this function, it does the same for 5 times. maybe use a loop instead of repeating yourself?
     mixTheAnswers(): void {
         this.arr = [];
+        // TODO: it looks like this.random shouldn't be an array? because you dont use it after the push
         this.random[0] = Math.floor(Math.random() * this.artistsList.length);
         this.arr.push(this.random[0]);
 
-
         do {
+          // TODO: WARNING! do/while is very dangerous in JS. what happens if this.arr.includes(this.random[1]) === true forever?
+          // can that happen?
+          // its better to think about a loop which is FINAL for sure.
             this.random[1] = Math.floor(Math.random() * this.artistsList.length);
         } while (this.arr.includes(this.random[1]));
         this.arr.push(this.random[1]);
@@ -99,13 +104,17 @@ export class GameRoundComponent implements OnInit {
 
     }
 
+    // TODO: a better name would be "handleUserAnswer", because you dont only check the answer, you also DO stuff.
     checkAnswer(answer: string): void {
         if (this.random[answer] == this.correctChoice.toString()) {       //correct
 
             this.nextQuestion = true;
+            // TODO: you don't need both correctAnswer and wrongAnswer..
             this.wrongAnswer = false;
             this.correctAnswer = true;
 
+            // TODO: you wrote "bonus if correct answer", then why it is not:
+            // if (this.correctAnswer) ?
             if (this.bonusQuestion == true) { //bonus if correct answer
                 this.totalScore += 15;
                 this.bonusQuestion = false;
