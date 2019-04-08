@@ -28,6 +28,6 @@
 </div>
 
 
-<app-artist-list *ngIf="artistsList"></app-artist-list>
-<app-game-round *ngIf="gameStart" (gameOverEvent)="gameOver($event)"></app-game-round>
-<app-high-score *ngIf='highScoreTable' [gameResult]='highScore'></app-high-score>
+<app-artist-list *ngIf="artistsList" routerLink="addArtist"></app-artist-list>
+<app-game-round *ngIf="gameStart" (gameOverEvent)="gameOver($event)" routerLink="game"></app-game-round>
+<app-high-score *ngIf='highScoreTable' [gameResult]='highScore' routerLink="top"></app-high-score>

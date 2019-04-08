@@ -1,6 +1,6 @@
 import {Artist} from "./artist-list/artist.model";
 import {EventEmitter, Injectable} from "@angular/core";
-import {HttpReqService} from "./httpReq.service";
+import {HttpReqService} from "./http-req.service";
 import {Response} from '@angular/http';
 import {Observable} from "rxjs";
 
@@ -34,36 +34,11 @@ export class ArtistsService {
           this.artistAddedSuccessfully.emit(false);
         }
       );
-        // this.httpReq.getArtists(artistName2).subscribe(
-        //     (response: Response) => {
-        //         const data = response.json();
-        //         if (data.results.length > 0) {
-        //             console.log("aaa:");
-        //             // TODO: temp is not a good name...
-        //             this.temp = (data.results)[0].artworkUrl60;
-        //             return this.temp;
-        //             //    let artist = new Artist(this.name, this.img);
-        //             //   this.artists.push(artist);
-        //             //  this.artistAddedSucesfully.emit(true);
-        //             //  return this.img.slice();
-        //         } else {
-        //             this.artistAddedSuccessfully.emit(false);
-        //             console.log("ccc");
-        //             return "a";
-        //
-        //         }
-        //     },
-        //     (error: Error) => this.artistAddedSuccessfully.emit(false)
-        // );
-        // console.log("ddd");
-        // this.artistAdded.emit(this.artists.slice());
-        // return this.temp;
-        // return 'a';
+
     }
 
 
-    // TODO: this name adds artist to the list, should be called "addArtist(name: string)"
-    onAddArtist(artistName: string): void {
+    addArtist(artistName: string): void {
       this.getArtists(artistName).then(
         (artist: Artist) => {
           // I removed all the "parsing" logic to another function, and now the "addArtist" function is more readable.
@@ -76,22 +51,24 @@ export class ArtistsService {
           this.artistAddedSuccessfully.emit(false);
         }
       );
-        // this.httpReq.getArtists(artistName).subscribe(
-        //     (response: Response) => {
-        //         const data = response.json();
-        //         console.log(data);
-        //         if (data.results.length > 0) {
-        //             this.name = (data.results)[0].artistName;
-        //             this.img = (data.results)[0].artworkUrl60;
-        //             const artist = new Artist(this.name, this.img);
-        //             this.artists.push(artist);
-        //             this.artistAddedSuccessfully.emit(true);
-        //         } else {
-        //             this.artistAddedSuccessfully.emit(false);
-        //         }
-        //     },
-        //     (error) => this.artistAddedSuccessfully.emit(false)
-        // );
+
+        this.httpReq.getArtists(artistName).subscribe(
+            (response: Response) => {
+                console.log("response:" + response);
+                const data = response.json();
+                console.log(data);
+                if (data.results.length > 0) {
+                    this.name = (data.results)[0].artistName;
+                    this.img = (data.results)[0].artworkUrl60;
+                    const artist = new Artist(this.name, this.img);
+                    this.artists.push(artist);
+                    this.artistAddedSuccessfully.emit(true);
+                } else {
+                    this.artistAddedSuccessfully.emit(false);
+                }
+            },
+            (error) => this.artistAddedSuccessfully.emit(false)
+        );
         this.artistAdded.emit(this.artists.slice());
     }
 
@@ -107,13 +84,15 @@ export class ArtistsService {
             return artist;
           }
           else {
+              this.artistAddedSuccessfully.emit(false);
             throw new Error('NO_MATCHING_ARTIST_FOUND');
           }
         },
         (error) => {
           // TODO: this is not necessarily a good practice, just didnt want to change your code much
-          throw new Error('NO_MATCHING_ARTIST_FOUND');
-          this.artistAddedSuccessfully.emit(false);
+            this.artistAddedSuccessfully.emit(false);
+            throw new Error('NO_MATCHING_ARTIST_FOUND');
+
         }
       );
     }
