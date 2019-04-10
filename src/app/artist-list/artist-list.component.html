@@ -5,11 +5,7 @@
         <input type="text" id="inputArtist" (input)="artistNameEvent($event)" #input>
         <button type="button" (click)="addArtists(input)"> add</button>
         <div *ngIf=" albumSrc && artistAdded">
-          <!-- TODO: don't use inline-css -->
-            <img
-                    [src]=albumSrc
-                    alt="error"
-                    style="max-height: 300px;">
+            <img [src]=albumSrc alt="error">
         </div>
         <p *ngIf="!artistAdded">Fail To Find The Artist</p>
     </div>

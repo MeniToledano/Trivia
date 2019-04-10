@@ -11,10 +11,8 @@ export class HttpReqService {
 
     getArtists(name: string) {
         this.tempUrlString = this.BASE_URL;
-        // TODO: Note that '+=' is not common for strings interpolation in JS.
-        this.tempUrlString += name + "&entity=album&limit=1";
-        // TODO: checkout this better approach:
-        // TODO: this.tempUrlString  = `${this.urlString}${name}&entity=album&limit=1`;
+        this.tempUrlString = this.tempUrlString + name + "&entity=album&limit=1";
+
         return this.http.get(this.tempUrlString);
     }
 }

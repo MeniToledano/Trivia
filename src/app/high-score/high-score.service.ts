@@ -3,7 +3,7 @@ import {PlayerModule} from "./player.module";
 export class HighScoreService {
     private records: PlayerModule[] = [];
 
-    serRecord(player: PlayerModule) {
+    setRecord(player: PlayerModule) {
         this.records.push(player);
     }
 

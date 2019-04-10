@@ -13,46 +13,53 @@ export class HighScoreComponent implements OnInit {
     @Input() gameResult: number;
     private records: PlayerModule[] = [];
     private newHighScore: boolean = false;
-    private showTable: boolean = false;
-
+    private showTable: boolean;
+    private emptyTable: boolean = true;
 
     constructor(private highScoreService: HighScoreService,
                 private router: Router) {
     }
 
     ngOnInit() {
+        this.showTable = false;
         this.router.navigate(['/top']);
         this.records = this.highScoreService.getRecords();
-        console.log("this.gameResult= " + this.gameResult);
-        // TODO: its not very clear what you are doing here... a comparison to -1?
-        if (this.gameResult !== -1) {
-            this.newRecordMessage();
-            //            this.showTable = true;  need to be added??
+
+        if (this.gameResult == -1) {
+            this.onClickFromMenu(true);
         } else {
-            this.showTable = true;
+            this.onClickFromMenu(false);
         }
 
+    }
+
+    onClickFromMenu(menuClicked: boolean): void {
+        if (menuClicked)
+            this.showTable = true;
+        else
+            this.newRecordMessage();
     }
 
     newRecordMessage(): void {
         if (this.records.length == 0) {
             this.newHighScore = true;
         } else {
+
             if (this.gameResult > this.records[0].score)
                 this.newHighScore = true;
         }
     }
 
 
-    addRecord(name : string): void {
+    addRecord(name: string): void {
         this.showTable = true;
         const player = new PlayerModule(name, this.gameResult);
-        this.highScoreService.serRecord(player);
-
+        this.highScoreService.setRecord(player);
+        this.emptyTable = false;
         this.sortRecordsBoard();
     }
 
     sortRecordsBoard(): void {
-      this.records.sort((a: PlayerModule, b: PlayerModule) => ((a.score > b.score) ? -1 : 1));
+        this.records.sort((a: PlayerModule, b: PlayerModule) => ((a.score > b.score) ? -1 : 1));
     }
 }

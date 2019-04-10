@@ -7,15 +7,18 @@
             <button (click)="addRecord(Name.value)">Submit</button>
         </div>
 
-        <h1> TOP PLAYERS </h1>
-        <!-- what happens when showTable==false and records.length == 0 ? -->
-        <!-- a better template would be one that has a div for case where showTable == true -->
-        <!-- and another div for the other case. using too much logic in template => bugs -->
-        <!-- in your case, you are left with no table, and only title "TOP PLAYERS" which is weird. -->
-        <div *ngIf='showTable && (records.length !== 0)'>
-            <div *ngFor="let record of records; let i = index">
-                {{i+1}}) {{record.name}} - {{record.score}}
+
+        <div *ngIf='showTable'>
+            <div *ngIf="records.length > 0">
+                <h1> TOP PLAYERS </h1>
+                <div *ngFor="let record of records; let i = index">
+                    {{i+1}}) {{record.name}} - {{record.score}}
+                </div>
+            </div>
+            <div *ngIf="records.length == 0">
+                <h2> Empty Table!</h2>
             </div>
         </div>
+
     </div>
 </div>

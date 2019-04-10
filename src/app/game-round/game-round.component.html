@@ -13,7 +13,6 @@
                 Bonus!! Get Extra Points!
             </h3>
             <div>
-              <!-- TODO: don't break lines if you don't have to -->
                 <img
                         [src]="src"
                         alt="error"
@@ -35,7 +34,7 @@
 
                 </ul>
             </div>
-            <h3 *ngIf="wrongAnswer">{{numberOfGuesses}} Wrong answer</h3>
+            <h3 *ngIf="!correctAnswer && numberOfGuesses > 0">{{numberOfGuesses}} Wrong answer</h3>
             <h3 *ngIf="correctAnswer">Good Job!</h3>
             <div>
                 <button *ngIf="correctAnswer || outOfGuesses" (click)="questionReset()" class="btn btn-primary">Next

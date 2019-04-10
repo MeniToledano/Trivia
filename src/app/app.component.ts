@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
 
     constructor(private httpReq: HttpReqService,
                 private artistsService: ArtistsService,
-                private router : Router) {
+                private router: Router) {
 
         this.initArtistList()
 
@@ -36,28 +36,30 @@ export class AppComponent implements OnInit {
         this.artistsService.addArtist("The Rolling Stones");
         this.artistsService.addArtist("Fleetwood Mac");
         this.artistsService.addArtist("Aerosmith");
+        this.artistsService.addArtist("Rihana");
+        this.artistsService.addArtist("Eminem");
     }
 
     buttonClicked(button: string): void {
-        if (button==='newGame' ) {
+        if (button === 'newGame') {
             this.gameStart = true;
             this.artistsList = false;
             this.highScoreTable = false;
-   //         this.router.navigate(['/game']);
-        } else if ( button ==='topPlayers') {
+            //         this.router.navigate(['/game']);
+        } else if (button === 'topPlayers') {
 
             this.gameStart = false;
             this.artistsList = false;
             this.highScoreTable = true;
             this.highScore = -1;
-        //    this.router.navigate(['/top']);
+            //    this.router.navigate(['/top']);
 
-        } else if ( button ==='addArtists') {
+        } else if (button === 'addArtists') {
 
             this.gameStart = false;
             this.artistsList = true;
             this.highScoreTable = false;
-       //     this.router.navigate(['/addArtists']);
+            //     this.router.navigate(['/addArtists']);
 
         }
     }
@@ -69,6 +71,6 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        // this.router.navigate(['']);
+        this.router.navigate(['']);
     }
 }
