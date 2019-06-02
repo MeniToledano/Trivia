@@ -1,9 +1,9 @@
-import {PlayerModule} from "./player.module";
+import {PlayerModel} from "./player.model";
 
 export class HighScoreService {
-    private records: PlayerModule[] = [];
+    private records: PlayerModel[] = [];
 
-    setRecord(player: PlayerModule) {
+    setRecord(player: PlayerModel) {
         this.records.push(player);
     }
 

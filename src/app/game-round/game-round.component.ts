@@ -28,7 +28,7 @@ export class GameRoundComponent implements OnInit {
     private roundNumber: number = 1;
     private totalScore: number = 0;
     private outOfGuesses: boolean = false;
-    
+
 //random, unrepeated questions data
     private allIndexesAvailable2: number[];
     private artistsListLeft: Artist[];

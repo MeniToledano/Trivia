@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {PlayerModule} from "./player.module";
+import {PlayerModel} from "./player.model";
 import {HighScoreService} from "./high-score.service";
 import {Router} from "@angular/router";
 
@@ -11,7 +11,7 @@ import {Router} from "@angular/router";
 export class HighScoreComponent implements OnInit {
 
     @Input() gameResult: number;
-    private records: PlayerModule[] = [];
+    private records: PlayerModel[] = [];
     private newHighScore: boolean = false;
     private showTable: boolean;
     private emptyTable: boolean = true;
@@ -53,13 +53,13 @@ export class HighScoreComponent implements OnInit {
 
     addRecord(name: string): void {
         this.showTable = true;
-        const player = new PlayerModule(name, this.gameResult);
+        const player = new PlayerModel(name, this.gameResult);
         this.highScoreService.setRecord(player);
         this.emptyTable = false;
         this.sortRecordsBoard();
     }
 
     sortRecordsBoard(): void {
-        this.records.sort((a: PlayerModule, b: PlayerModule) => ((a.score > b.score) ? -1 : 1));
+        this.records.sort((a: PlayerModel, b: PlayerModel) => ((a.score > b.score) ? -1 : 1));
     }
 }
